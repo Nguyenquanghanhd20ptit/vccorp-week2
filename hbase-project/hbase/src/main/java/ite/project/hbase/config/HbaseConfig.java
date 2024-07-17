@@ -18,7 +18,8 @@ public class HbaseConfig {
     @Bean
     public org.apache.hadoop.conf.Configuration configuration(){
         org.apache.hadoop.conf.Configuration config = HBaseConfiguration.create();
-        config.set(resourceProperties.getHbaseZookeeperQuorum(),resourceProperties.getHbaseZookeeperClientPort());
+        config.set("hbase.zookeeper.quorum", resourceProperties.getHbaseZookeeperQuorum());
+        config.set("hbase.zookeeper.property.clientPort", resourceProperties.getHbaseZookeeperClientPort());
         return config;
     }
 
