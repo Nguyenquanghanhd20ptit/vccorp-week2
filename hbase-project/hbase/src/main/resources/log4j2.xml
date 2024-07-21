@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Properties>
+        <Property name="LOG_PATTERN">%d{yyyy/MM/dd HH:mm:ss,SSS} - %t - %m%n</Property>
+        <Property name="LOG_ROOT_PATH">/data/vccorp/logs</Property>
+        <Property name="LOG_PATH">${LOG_ROOT_PATH}/vccorp/vccorp-hbase</Property>
+    </Properties>
+    <Appenders>
+        <RollingFile name="debugLog" fileName="${LOG_PATH}/debug/application-debug.log"
+                     filePattern="${LOG_PATH}/debug/application-debug-%d{yyyy-MM-dd}-%i.log">
+        <PatternLayout pattern="${LOG_PATTERN}"/>
+        <!-- Matches only DEBUG level -->
+        <LevelRangeFilter minLevel="DEBUG" maxLevel="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+        <Policies>
+            <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            <SizeBasedTriggeringPolicy size="10 MB"/>
+        </Policies>
+            <DefaultRolloverStrategy max="100"/>
+        </RollingFile>
+
+        <RollingFile name="infoLog" fileName="${LOG_PATH}/info/application-info.log"
+                     filePattern="${LOG_PATH}/info/application-info-%d{yyyy-MM-dd}-%i.log">
+
+            <!-- Matches only INFO level -->
+            <LevelRangeFilter minLevel="INFO" maxLevel="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="100"/>
+        </RollingFile>
+
+        <RollingFile name="errorLog" fileName="${LOG_PATH}/error/application-error.log"
+                     filePattern="${LOG_PATH}/error/application-error-%d{yyyy-MM-dd}-%i.log">
+
+            <!-- Matches only ERROR level -->
+            <LevelRangeFilter minLevel="ERROR" maxLevel="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="100"/>
+        </RollingFile>
+
+    </Appenders>
+    <Loggers>
+        <Logger name="vccorp-hbase"  level="all" additivity="false">
+            <AppenderRef ref="debugLog"/>
+            <AppenderRef ref="infoLog"/>
+            <AppenderRef ref="errorLog"/>
+        </Logger>
+    </Loggers>
+</Configuration>
